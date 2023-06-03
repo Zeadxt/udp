@@ -129,10 +129,10 @@ echo -e "${GREEN}proses instalasi sedang berjalan..!!"
 sleep 1
 clear
 echo -e "${GREEN} MENDOWNLOAD ASET..!!!"
-wget -q -O /usr/bin/addudp "https://raw.githubusercontent.com/Zeadxt/udp/main/udp/add.sh"
-wget -q -O /usr/bin/udp "https://raw.githubusercontent.com/Zeadxt/udp/main/udp/menu.sh"
+wget -q -O /usr/bin/addudp "https://raw.githubusercontent.com/Zeadxt/udp/main/add.sh"
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/Zeadxt/udp/main/menu.sh"
 chmod 777 /usr/bin/addudp
-chmod 777 /usr/bin/udp
+chmod 777 /usr/bin/menu
 clear
 
 echo -e "${GREEN} MENDOWNLOAD CONFIG UDP"
