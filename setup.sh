@@ -19,74 +19,13 @@ export SEND="[${YELLOW} SEND ${NC}]"
 export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
 export BOLD="\e[1m"
 
-BURIQ () {
-curl -sS ${voc}/ip > /root/tmp
-data=( `cat /root/tmp | grep -E "^### " | awk '{print $2}'` )
-for user in "${data[@]}"
-do
-exp=( `grep -E "^### $user" "/root/tmp" | awk '{print $3}'` )
-d1=(`date -d "$exp" +%s`)
-d2=(`date -d "$biji" +%s`)
-exp2=$(( (d1 - d2) / 86400 ))
-if [[ "$exp2" -le "0" ]]; then
-echo $user > /etc/.$user.ini
-else
-rm -f  /etc/.$user.ini > /dev/null 2>&1
-fi
-done
-rm -f  /root/tmp
-}
-MYIP=$(curl -sS ipv4.icanhazip.com)
-Name=$(curl -sS ${voc}/ip | grep $MYIP | awk '{print $2}')
-echo $Name > /usr/local/etc/.$Name.ini
-CekOne=$(cat /usr/local/etc/.$Name.ini)
-Bloman () {
-if [ -f "/etc/.$Name.ini" ]; then
-CekTwo=$(cat /etc/.$Name.ini)
-if [ "$CekOne" = "$CekTwo" ]; then
-res="Expired"
-fi
-else
-res="Permission Accepted..."
-fi
-}
-PERMISSION () {
-MYIP=$(curl -sS ipv4.icanhazip.com)
-IZIN=$(curl -sS ${voc}/ip | awk '{print $4}' | grep $MYIP)
-if [ "$MYIP" = "$IZIN" ]; then
-Bloman
-else
-res="Permission Denied!"
-fi
-BURIQ
-}
-clear
-secs_to_human() {
-echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
-}
+apt install lolcat -yy
+
 start=$(date +%s)
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 echo -e "[ ${tyblue}INFO${NC} ] Preparing the install file"
-apt install git curl -y >/dev/null 2>&1
-apt install python -y >/dev/null 2>&1
-echo -e "[ ${tyblue}INFO${NC} ] Selamat... File Instalasi Sudah Siap Brooo....!!!!"
-sleep 1
-echo -ne "[ ${tyblue}INFO${NC} ] Check permission : "
-PERMISSION
-if [ -f /home/needupdate ]; then
-red "Your script need to update first !"
-exit 0
-elif [ "$res" = "Permission Accepted..." ]; then
-green "Permission Accepted!"
-else
-red "Permission Denied!"
-rm setup.sh > /dev/null 2>&1
-sleep 0.5
-exit 0
-fi
-sleep 0.5
 
 clear
 echo ""
